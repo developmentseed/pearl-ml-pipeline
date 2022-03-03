@@ -87,7 +87,7 @@ arguments=[
 ```
 ### Evaluate the Trained Model
 
-To compute Global F1, and class base F1 scores (written in CSV) from a trained model over ltest dataset. You can use this [eval script](https://github.com/developmentseed/ms-lulc-ml-training/blob/documentation_updates/train_azure/run_eval_midwest-multiyear.py) as an example. 
+To compute Global F1, and class base F1 scores (written in CSV) from a trained model over latest dataset. You can use this [eval script](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/train_azure/run_eval.py) as an example. 
 
 ### Seed Data Creation for PEARL
 After a best performing model is selected, seed dataseed need to be created to serve PEARL. Seed Data is the model embedding layers from the trained model that is used together with users inputs training data in PEARL retraining session. 
