@@ -92,7 +92,7 @@ To compute Global F1, and class base F1 scores (written in CSV) from a trained m
 ### Seed Data Creation for PEARL
 After a best performing model is selected, seed dataseed need to be created to serve PEARL. Seed Data is the model embedding layers from the trained model that is used together with users inputs training data in PEARL retraining session. 
 
-[run_seeddata_creation.py](https://github.com/developmentseed/ms-lulc-ml-training/blob/documentation_updates/train_azure/run_seeddata_creation.py) will config AML and use the [main seeddata creation script](https://github.com/developmentseed/ms-lulc-ml-training/blob/documentation_updates/src/seed_data_creation.py) to create seeddata for the trained best performing model. 
+[run_seeddata_creation.py](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/train_azure/run_seeddata_creation.py) will config AML and use the [main seeddata creation script](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/src/seeddata_creation.py) to create seeddata for the trained best performing model. 
 
 ### (Optional) Classes Distribution
 
