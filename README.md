@@ -98,7 +98,7 @@ After a best performing model is selected, seed dataseed need to be created to s
 
 LULC Class distribution is a graph show the porpotion of LULC pixel numbers for a trained model on PEARL. See the bar chart bellow.
 
-[train_azure/run_cls_distrib.py](https://github.com/developmentseed/ms-lulc-ml-training/blob/documentation_updates/train_azure/run_cls_distrib.py) will guide you how to compute the classes distribution from the training dataset for the model. 
+[train_azure/run_cls_distrib.py](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/train_azure/run_cls_distrib.py) will guide you how to compute the classes distribution from the training dataset for the model. 
 
 <img width="1255" alt="Screen Shot 2021-11-08 at 8 07 49 AM" src="https://user-images.githubusercontent.com/14057932/140747356-31c90a9b-5cce-4b52-a74f-ca2841e9549c.png">
 
