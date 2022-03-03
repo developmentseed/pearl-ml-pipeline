@@ -66,7 +66,7 @@ In the end of model training you should see something like this on your AML port
 ### Train LULC Model on AML
 We have three PyTorch based Semantic Segmenation models ready for LULC model trainings, FCN, UNet and DeepLabV3+. 
 
-To train a model on AML, you will need to define or parse a few crucial parameters to the [script](train_azure/run_model2.py), for instance:
+To train a model on AML, you will need to define or parse a few crucial parameters to the [script](train_azure/run_model.py), for instance:
 
 ```python
 ScriptRunConfig(
