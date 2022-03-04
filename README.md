@@ -57,6 +57,12 @@ In the end of model training you should see something like this on your AML port
 <img width="1426" alt="Screen Shot 2021-11-08 at 8 20 04 AM" src="https://user-images.githubusercontent.com/14057932/140749239-6963fd38-d8cb-40a6-b2eb-2cd1869ab897.png">
 
 ### Configure environment
+
+This code was tested using `python 3.6.5`
+
+Please install `train_azure/requirements.txt` into your local environment
+
+
 You will need to set the following variables in your env
 
 bash
@@ -67,6 +73,9 @@ AZ_SUB_ID=XXX #az account list --output table
 AZ_WORKSPACE_NAME=XXX #User set
 AZ_RESOURCE_GROUP=XXX #User set
 AZ_REGION=XXX #User set
+
+AZ_GPU_CLUSTER_NAME=XXX #User set
+
 ```
 
 Then export all variables to your environment:
@@ -75,7 +84,6 @@ Then export all variables to your environment:
 export $(cat .env);
 ```
 
-This code was tested using `python 3.6.5`
 
 ### Create Your Workspace on AML
 [train_azure/create_workspace.py](train_azure/create_workspace.py) after export your Azure credentials, this script will create AML workspace. 
