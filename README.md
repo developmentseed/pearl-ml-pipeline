@@ -75,7 +75,7 @@ AZ_RESOURCE_GROUP=XXX #User set
 AZ_REGION=XXX #User set
 
 AZ_GPU_CLUSTER_NAME=XXX #User set
-
+AZ_CPU_CLUSTER_NAME=XXX #User set
 ```
 
 Then export all variables to your environment:
@@ -91,6 +91,11 @@ export $(cat .env);
 ### Create GPU Compute 
 
 [This script](https://github.com/developmentseed/ms-lulc-ml-training/blob/documentation_updates/train_azure/create_compute-gpu.py) will create GPU compute resources to your workspace on AML. 
+
+### (Optional) Create CPU Compute 
+
+[This script](https://github.com/developmentseed/ms-lulc-ml-training/blob/documentation_updates/train_azure/create_compute-cpu.py) will create GPU compute resources to your workspace on AML. 
+
 
 ### Train LULC Model on AML
 We have three PyTorch based Semantic Segmenation models ready for LULC model trainings, FCN, UNet and DeepLabV3+. 
