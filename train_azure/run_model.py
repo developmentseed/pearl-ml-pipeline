@@ -1,3 +1,4 @@
+import os
 from azureml.core import Workspace
 from azureml.core import Experiment
 from azureml.core import Environment
@@ -7,16 +8,16 @@ AZ_GPU_CLUSTER_NAME = os.environ.get('AZ_GPU_CLUSTER_NAME')
 
 if __name__ == "__main__":
     ws = Workspace.from_config()
-    experiment = Experiment(workspace=ws, name="los-angeles-deeplabv3plus")
+    experiment = Experiment(workspace=ws, name="sample-exp-fort-collins")
     config = ScriptRunConfig(
         source_directory="./src",
         script="train.py",
         compute_target=AZ_GPU_CLUSTER_NAME,
         arguments=[
             "--input_fn",
-            "data/los_angeles_train.csv",
+            "sample_data/fort-collins_train.csv",
             "--input_fn_val",
-            "data/los_angeles_val.csv",
+            "sample_data/fort-collins_val.csv",
             "--output_dir",
             "./outputs",
             "--save_most_recent",
@@ -27,7 +28,7 @@ if __name__ == "__main__":
             "--num_classes",
             8,
             "--label_transform",
-            "uvm8cls",
+            "uvm",
             "--model",
             "deeplabv3plus",
         ],
@@ -35,7 +36,7 @@ if __name__ == "__main__":
 
     # set up pytorch environment
     pytorch_env = Environment.from_conda_specification(
-        name="lulc-pytorch-env", file_path="./.azureml/pytorch-env.yml"
+        name="lulc-pytorch-env", file_path="./pytorch-env.yml"
     )
 
     # Specify a GPU base image

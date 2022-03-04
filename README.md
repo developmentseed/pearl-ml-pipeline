@@ -90,11 +90,11 @@ export $(cat .env);
 
 ### Create GPU Compute 
 
-[This script](https://github.com/developmentseed/ms-lulc-ml-training/blob/documentation_updates/train_azure/create_compute-gpu.py) will create GPU compute resources to your workspace on AML. 
+[This script](train_azure/create_compute-gpu.py) will create GPU compute resources to your workspace on AML. 
 
 ### (Optional) Create CPU Compute 
 
-[This script](https://github.com/developmentseed/ms-lulc-ml-training/blob/documentation_updates/train_azure/create_compute-cpu.py) will create GPU compute resources to your workspace on AML. 
+[This script](train_azure/create_compute-cpu.py) will create GPU compute resources to your workspace on AML. 
 
 
 ### Train LULC Model on AML
@@ -103,22 +103,35 @@ We have three PyTorch based Semantic Segmenation models ready for LULC model tra
 To train a model on AML, you will need to define or parse a few crucial parameters to the [script](train_azure/run_model.py), for instance:
 
 ```python
-ScriptRunConfig(
-source_directory='./src',
-script='train.py',
-compute_target='gpu-nc12-ny',
-arguments=[
-    '--input_fn', 'data/midwest_train_multi_year.csv',
-    '--input_fn_val', 'data/midwest_val_multi_year.csv',
-    '--output_dir',  './outputs',
-    '--save_most_recent',
-    '--num_epochs', 20,
-    '--num_chips', 200,
-    '--num_classes', 7,
-    '--label_transform', 'uvm',
-    '--model', 'deeplabv3plus'])
-
+config = ScriptRunConfig(
+    source_directory="./src",
+    script="train.py",
+    compute_target=AZ_GPU_CLUSTER_NAME,
+    arguments=[
+        "--input_fn",
+        "sample_data/fort-collins_train.csv",
+        "--input_fn_val",
+        "sample_data/fort-collins_val.csv",
+        "--output_dir",
+        "./outputs",
+        "--save_most_recent",
+        "--num_epochs",
+        20,
+        "--num_chips",
+        200,
+        "--num_classes",
+        8,
+        "--label_transform",
+        "uvm",
+        "--model",
+        "deeplabv3plus",
+    ],
+)
 ```
+
+These parameters are to be configure by the user. `input_fn_X` paths should be provided by the user, and are the outputs of the data generation step (NAIP Label Algin) described above.
+
+
 ### Evaluate the Trained Model
 
 To compute Global F1, and class base F1 scores (written in CSV) from a trained model over latest dataset. You can use this [eval script](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/train_azure/run_eval.py) as an example. 
