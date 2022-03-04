@@ -109,9 +109,9 @@ config = ScriptRunConfig(
     compute_target=AZ_GPU_CLUSTER_NAME,
     arguments=[
         "--input_fn",
-        "sample_data/fort-collins_train.csv",
+        "sample_data/indianapolis_train.csv",
         "--input_fn_val",
-        "sample_data/fort-collins_val.csv",
+        "sample_data/indianapolis_val.csv",
         "--output_dir",
         "./outputs",
         "--save_most_recent",
@@ -120,7 +120,7 @@ config = ScriptRunConfig(
         "--num_chips",
         200,
         "--num_classes",
-        8,
+        7,
         "--label_transform",
         "uvm",
         "--model",
@@ -131,10 +131,15 @@ config = ScriptRunConfig(
 
 These parameters are to be configure by the user. `input_fn_X` paths should be provided by the user, and are the outputs of the data generation step (NAIP Label Algin) described above.
 
+`python train_azure/run_model.py`
+
 
 ### Evaluate the Trained Model
 
-To compute Global F1, and class base F1 scores (written in CSV) from a trained model over latest dataset. You can use this [eval script](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/train_azure/run_eval.py) as an example. 
+To compute Global F1, and class base F1 scores (written in CSV) from a trained model over latest dataset. You can use this [eval script](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/train_azure/run_eval.py) as an example. You will need a local version of your the trained model you need to evaluate. This can be downloaded from the outputs of a model training via AzureML Studio.
+
+`python train_azure/run_eval.py`
+
 
 ### Seed Data Creation for PEARL
 After a best performing model is selected, seed dataseed need to be created to serve PEARL. Seed Data is the model embedding layers from the trained model that is used together with users inputs training data in PEARL retraining session. 

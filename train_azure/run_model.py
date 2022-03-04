@@ -8,16 +8,16 @@ AZ_GPU_CLUSTER_NAME = os.environ.get('AZ_GPU_CLUSTER_NAME')
 
 if __name__ == "__main__":
     ws = Workspace.from_config()
-    experiment = Experiment(workspace=ws, name="sample-exp-fort-collins")
+    experiment = Experiment(workspace=ws, name="sample-exp-indianapolis")
     config = ScriptRunConfig(
         source_directory="./src",
         script="train.py",
         compute_target=AZ_GPU_CLUSTER_NAME,
         arguments=[
             "--input_fn",
-            "sample_data/fort-collins_train.csv",
+            "sample_data/indianapolis_train.csv",
             "--input_fn_val",
-            "sample_data/fort-collins_val.csv",
+            "sample_data/indianapolis_val.csv",
             "--output_dir",
             "./outputs",
             "--save_most_recent",
@@ -26,7 +26,7 @@ if __name__ == "__main__":
             "--num_chips",
             200,
             "--num_classes",
-            8,
+            7,
             "--label_transform",
             "uvm",
             "--model",
