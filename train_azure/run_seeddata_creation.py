@@ -21,27 +21,38 @@ if __name__ == "__main__":
         print("No config found. Please create a workspace before running")
         sys.exit(0)
 
-    experiment = Experiment(workspace=ws, name='hamilton_county_indianapolis_deeplabv3plus_7cls_seeddata-nc12')
+    experiment = Experiment(
+        workspace=ws,
+        name="sample-exp-indianapolis-seeddata",
+    )
 
-    config = ScriptRunConfig(source_directory='./src',
-                             script='seed_data_creation.py',
-                             compute_target=AZ_GPU_CLUSTER_NAME,
-                             arguments=[
-                                 '--input_csv', 'data/hamilton_county_indianapolis_test.csv',
-                                 '--ckpt_file', 'data/hamilton_county_indianapolis_most_recent_model.pt', # replace with weight on azure
-                                 '--n_classes', 7,
-                                 '--out_npz', './outputs/deeplabv3-7cls-hamilton_county_indianapolis_seed_data.npz',
-                                 '--model', 'deeplabv3plus'])
+    config = ScriptRunConfig(
+        source_directory="./src",
+        script="seed_data_creation.py",
+        compute_target=AZ_GPU_CLUSTER_NAME,
+        arguments=[
+            "--input_csv",
+            "sample_data/indianapolis_test.csv",
+            "--ckpt_file",
+            "sample_data/indianapolis_most_recent_model.pt",  # replace with weight on azure
+            "--n_classes",
+            7,
+            "--out_npz",
+            "./outputs/sample-output-indianapolis.npz",
+            "--model",
+            "deeplabv3plus",
+        ],
+    )
     # set up pytorch environment
     pytorch_env = Environment.from_conda_specification(
-        name='lulc-pytorch-env',
-        file_path='./.azureml/pytorch-env.yml'
+        name="lulc-pytorch-env", file_path="./pytorch-env.yml"
     )
 
     # Specify a GPU base image
     pytorch_env.docker.enabled = True
-    pytorch_env.docker.base_image = 'mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04'
-
+    pytorch_env.docker.base_image = (
+        "mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04"
+    )
 
     config.run_config.environment = pytorch_env
 

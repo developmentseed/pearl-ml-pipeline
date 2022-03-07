@@ -6,23 +6,23 @@ from azureml.core import ScriptRunConfig
 from azureml.core.authentication import InteractiveLoginAuthentication
 
 AZ_TENANT_ID = os.getenv("AZ_TENANT_ID")
-AZ_CPU_CLUSTER_NAME = os.getenv*
+AZ_CPU_CLUSTER_NAME = os.getenv("AZ_CPU_CLUSTER_NAME")
 if __name__ == "__main__":
-    interactive_auth = InteractiveLoginAuthentication(tenant_id=TENANT_ID)
+    interactive_auth = InteractiveLoginAuthentication(tenant_id=AZ_TENANT_ID)
     try:
         ws = Workspace.from_config()
     except:
         print("No config found. Please create a workspace before running")
         sys.exit(0)
 
-    experiment = Experiment(workspace=ws, name="ham-county-IN_cls_distribution")
+    experiment = Experiment(workspace=ws, name="sample-exp-cls_distribution")
     config = ScriptRunConfig(
         source_directory="./src",
         script="cls_distribution.py",
         compute_target=AZ_CPU_CLUSTER_NAME,
         arguments=[
             "--input_fn",
-            "data/hamilton_county_indianapolis_test.csv",
+            "sample_data/indianapolis_test.csv",
             "--num_classes",
             7,
             "--label_transform",
@@ -34,9 +34,8 @@ if __name__ == "__main__":
 
     # set up pytorch environment
     pytorch_env = Environment.from_conda_specification(
-        name="lulc-pytorch-env", file_path="./.azureml/pytorch-env.yml"
+        name="lulc-pytorch-env", file_path="./pytorch-env.yml"
     )
-
 
     # This env variable needs to be set for rasterio to open remote files
     # https://github.com/mapbox/rasterio/issues/1289
