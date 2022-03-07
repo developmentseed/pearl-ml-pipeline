@@ -157,13 +157,3 @@ LULC Class distribution is a graph show the porpotion of LULC pixel numbers for 
 `python train_azure/run_cls_distrib.py`
 
 <img width="1255" alt="Screen Shot 2021-11-08 at 8 07 49 AM" src="https://user-images.githubusercontent.com/14057932/140747356-31c90a9b-5cce-4b52-a74f-ca2841e9549c.png">
-
-## Serve Trained Models to PEARL
-
-[This google doc](https://docs.google.com/document/d/1lD94hISFdCDdDlnN_xO1lJY4CylsIvqm3j9iqHXtShE/edit) provides steps on how to serve trained LULC model(s) to PEARL. That includes:
-- How/Why we create Seed Data
-- Documentation Models currently in PEARL 
-- Adding New Models to Pearl 
-- Adding New Model Architecture to Pearl
-- Debugging/Contributing to LULC infra 
-- Running Flow Tests Locally 
