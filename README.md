@@ -54,12 +54,47 @@ If you are going to use AML to train LULC models for the first time, please go t
 
 <img width="1426" alt="Screen Shot 2021-11-08 at 8 20 04 AM" src="https://user-images.githubusercontent.com/14057932/140749239-6963fd38-d8cb-40a6-b2eb-2cd1869ab897.png">
 
+### Configure environment
+
+This code was tested using `python 3.6.5`
+
+Please install `train_azure/requirements.txt` into your local environment
+
+
+You will need to set the following variables in your env
+
+bash
+```
+AZ_TENANT_ID=XXX #az account show --output table
+AZ_SUB_ID=XXX #az account list --output table
+
+AZ_WORKSPACE_NAME=XXX #User set
+AZ_RESOURCE_GROUP=XXX #User set
+AZ_REGION=XXX #User set
+
+AZ_GPU_CLUSTER_NAME=XXX #User set
+AZ_CPU_CLUSTER_NAME=XXX #User set
+```
+
+Then export all variables to your environment:
+
+```
+export $(cat .env);
+```
+
+
 ### Create Your Workspace on AML
 [train_azure/create_workspace.py](train_azure/create_workspace.py) after export your Azure credentials, this script will create AML workspace. 
 
 ### Create GPU Compute 
 
 [This script](train_azure/create_compute-gpu.py) will create GPU compute resources to your workspace on AML. 
+
+
+### (Optional) Create CPU Compute 
+
+[This script](train_azure/create_compute-cpu.py) will create GPU compute resources to your workspace on AML. 
+
 
 ### Train LULC Model on AML
 We have three PyTorch based Semantic Segmenation models ready for LULC model trainings, FCN, UNet and DeepLabV3+. 
@@ -68,30 +103,50 @@ To train a model on AML, you will need to define or parse a few crucial paramete
 
 TODO: Will we be providing sample csv
 ```python
-ScriptRunConfig(
-source_directory='./src',
-script='train.py',
-compute_target='gpu-nc12-ny',
-arguments=[
-    '--input_fn', 'data/midwest_train_multi_year.csv',
-    '--input_fn_val', 'data/midwest_val_multi_year.csv',
-    '--output_dir',  './outputs',
-    '--save_most_recent',
-    '--num_epochs', 20,
-    '--num_chips', 200,
-    '--num_classes', 7,
-    '--label_transform', 'uvm',
-    '--model', 'deeplabv3plus'])
-
+config = ScriptRunConfig(
+    source_directory="./src",
+    script="train.py",
+    compute_target=AZ_GPU_CLUSTER_NAME,
+    arguments=[
+        "--input_fn",
+        "sample_data/indianapolis_train.csv",
+        "--input_fn_val",
+        "sample_data/indianapolis_val.csv",
+        "--output_dir",
+        "./outputs",
+        "--save_most_recent",
+        "--num_epochs",
+        20,
+        "--num_chips",
+        200,
+        "--num_classes",
+        7,
+        "--label_transform",
+        "uvm",
+        "--model",
+        "deeplabv3plus",
+    ],
+)
 ```
+
+These parameters are to be configure by the user. `input_fn_X` paths should be provided by the user, and are the outputs of the data generation step (NAIP Label Algin) described above.
+
+`python train_azure/run_model.py`
+
+
 ### Evaluate the Trained Model
 
 To compute Global F1, and class base F1 scores (written in CSV) from a trained model over latest dataset. You can use this [eval script](train_azure/run_eval.py) as an example. 
+
+`python train_azure/run_eval.py`
+
 
 ### Seed Data Creation for PEARL
 After a best performing model is selected, seed dataseed need to be created to serve PEARL. Seed Data is the model embedding layers from the trained model that is used together with users inputs training data in PEARL retraining session. 
 
 [run_seeddata_creation.py](train_azure/run_seeddata_creation.py) will config AML and use the [main seeddata creation script](src/seed_data_creation.py) to create seed data for the trained best performing model. 
+
+`python train_azure/run_seeddata_creation.py`
 
 ### (Optional) Classes Distribution
 
@@ -99,14 +154,6 @@ LULC Class distribution is a graph showing the porpotion of LULC pixel numbers f
 
 [train_azure/run_cls_distrib.py](train_azure/run_cls_distrib.py) will guide you how to compute the classes distribution from the training dataset for the model. 
 
+`python train_azure/run_cls_distrib.py`
+
 <img width="1255" alt="Screen Shot 2021-11-08 at 8 07 49 AM" src="https://user-images.githubusercontent.com/14057932/140747356-31c90a9b-5cce-4b52-a74f-ca2841e9549c.png">
-
-## Serve Trained Models to PEARL
-
-TODO: Decide if we would like to detail our steps on uploading model to PEARL
-- How/Why we create Seed Data
-- Documentation Models currently in PEARL 
-- Adding New Models to Pearl 
-- Adding New Model Architecture to Pearl
-- Debugging/Contributing to LULC infra 
-- Running Flow Tests Locally 

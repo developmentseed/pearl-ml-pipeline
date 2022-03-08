@@ -13,7 +13,7 @@ AZ_GPU_CLUSTER_NAME = os.getenv("AZ_GPU_CLUSTER_NAME")
 if __name__ == "__main__":
     interactive_auth = InteractiveLoginAuthentication(tenant_id=AZ_TENANT_ID)
     ws = Workspace.from_config()
-    experiment = Experiment(workspace=ws, name="hamilton-county-deeplap-eval")
+    experiment = Experiment(workspace=ws, name="sample-exp-indianapolis-eval")
 
     # find the experiment Run ID through your Azure portal https://ml.azure.com/experiments/
 
@@ -23,9 +23,9 @@ if __name__ == "__main__":
         compute_target=AZ_GPU_CLUSTER_NAME,
         arguments=[
             "--model_fn",
-            "data/hamilton_county_most_recent_model.pt",
+            "sample_data/indianapolis_most_recent_model.pt",
             "--input_fn",
-            "data/hamilton_county_test.csv",
+            "sample_data/indianapolis_test.csv",
             "--output_dir",
             "./outputs",
             "--num_classes",
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     # set up pytorch environment
     pytorch_env = Environment.from_conda_specification(
-        name="lulc-pytorch-env", file_path="./.azureml/pytorch-env.yml"
+        name="lulc-pytorch-env", file_path="./pytorch-env.yml"
     )
 
     # Specify a GPU base image
