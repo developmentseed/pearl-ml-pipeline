@@ -1,0 +1,24 @@
+name: pytorch-env
+channels:
+    - defaults
+    - pytorch
+dependencies:
+    - python=3.8
+    - pytorch==1.4.0
+    - torchvision
+    - numpy
+    - pandas
+    - tifffile
+    - matplotlib
+    - pip
+    - pip:
+        - azureml-sdk
+        - rasterio
+        - fiona
+        - segmentation-models-pytorch
+        - scikit-learn
+        - rio-tiler
+        - mercantile
+        - matplotlib
+        - seaborn
+        - tqdm
