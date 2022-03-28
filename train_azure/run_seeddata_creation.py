@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     experiment = Experiment(
         workspace=ws,
-        name="sample-exp-indianapolis-seeddata",
+        name="sample-exp-fortcollins",
     )
 
     config = ScriptRunConfig(
@@ -32,13 +32,13 @@ if __name__ == "__main__":
         compute_target=AZ_GPU_CLUSTER_NAME,
         arguments=[
             "--input_csv",
-            "sample_data/indianapolis_test.csv",
+            "data/fort-collins_test.csv",
             "--ckpt_file",
-            "sample_data/indianapolis_most_recent_model.pt",  # replace with weight on azure
+            "model/most_recent_model.pt",  # replace with weight on azure
             "--n_classes",
             7,
             "--out_npz",
-            "./outputs/sample-output-indianapolis.npz",
+            "./outputs/sample-output-fortcollins.npz",
             "--model",
             "deeplabv3plus",
         ],

@@ -15,14 +15,14 @@ if __name__ == "__main__":
         print("No config found. Please create a workspace before running")
         sys.exit(0)
 
-    experiment = Experiment(workspace=ws, name="sample-exp-cls_distribution")
+    experiment = Experiment(workspace=ws, name="sample-exp-fortcollins")
     config = ScriptRunConfig(
         source_directory="./src",
         script="cls_distribution.py",
         compute_target=AZ_CPU_CLUSTER_NAME,
         arguments=[
             "--input_fn",
-            "sample_data/indianapolis_test.csv",
+            "data/fort-collins_test.csv",
             "--num_classes",
             7,
             "--label_transform",

@@ -13,7 +13,7 @@ AZ_GPU_CLUSTER_NAME = os.getenv("AZ_GPU_CLUSTER_NAME")
 if __name__ == "__main__":
     interactive_auth = InteractiveLoginAuthentication(tenant_id=AZ_TENANT_ID)
     ws = Workspace.from_config()
-    experiment = Experiment(workspace=ws, name="sample-exp-indianapolis-eval")
+    experiment = Experiment(workspace=ws, name="sample-exp-fortcollins")
 
     # find the experiment Run ID through your Azure portal https://ml.azure.com/experiments/
 
@@ -23,9 +23,9 @@ if __name__ == "__main__":
         compute_target=AZ_GPU_CLUSTER_NAME,
         arguments=[
             "--model_fn",
-            "sample_data/indianapolis_most_recent_model.pt",
+            "model/most_recent_model.pt",
             "--input_fn",
-            "sample_data/indianapolis_test.csv",
+            "data/fort-collins_test.csv",
             "--output_dir",
             "./outputs",
             "--num_classes",
