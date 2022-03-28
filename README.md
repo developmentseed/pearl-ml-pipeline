@@ -1,10 +1,8 @@
-# MS LULC ML Training
+# PEARL ML Training Pipeline
 
-MS LULC ML Training is a fork from Caleb's original GitHub repo for ML models of LULC. Though, our current model scripts and workflow are quite different from Caleb's. Therefore, this documentation means to serve how we create training data, train and evaluate models on Azure ML, seed datasets creation from trained model.
+This repo contains scripts to manage training data, workflow to create Azure ML stack and train new models that are compatible to be run on the PEARL Platform. It is based on the work on Caleb Robinson of Microsoft.
 
-## How We Train Models 
-
-### Training
+## Training
 
 - Monitor experiments and training runs on Azure ML 
 - Training Repo
@@ -13,7 +11,7 @@ MS LULC ML Training is a fork from Caleb's original GitHub repo for ML models of
 
 - [DeepLabv3Plus Architecture](https://github.com/qubvel/segmentation_models.pytorch/blob/master/segmentation_models_pytorch/decoders/deeplabv3/model.py) + [focal loss](https://github.com/qubvel/segmentation_models.pytorch/blob/master/segmentation_models_pytorch/losses/focal.py) seems most promising approach
 
-### Evaluation
+## Evaluation
 - We run the model over the test data set, and use the per class
 
 ### SEED Data
