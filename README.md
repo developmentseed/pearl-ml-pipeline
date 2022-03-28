@@ -1,6 +1,31 @@
 # MS LULC ML Training
 
-MS LULC ML Training is a fork from Caleb's original GitHub repo for ML models of LULC. Though, our current model scripts and workflow are quite different from Caleb's. Therefore, this documentation means to serve how we create training data, train and evaluate models on Azure ML, seed datasets creation from trained model. 
+MS LULC ML Training is a fork from Caleb's original GitHub repo for ML models of LULC. Though, our current model scripts and workflow are quite different from Caleb's. Therefore, this documentation means to serve how we create training data, train and evaluate models on Azure ML, seed datasets creation from trained model.
+
+## How We Train Models 
+
+### Training
+
+- Monitor experiments and training runs on Azure ML 
+- Training Repo
+    - [Training code](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/src/train.py) 
+    - [Evaluation code](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/src/eval.py)
+
+- [DeepLabv3Plus Architecture](https://github.com/qubvel/segmentation_models.pytorch/blob/master/segmentation_models_pytorch/decoders/deeplabv3/model.py) + [focal loss](https://github.com/qubvel/segmentation_models.pytorch/blob/master/segmentation_models_pytorch/losses/focal.py) seems most promising approach
+
+### Evaluation
+- We run the model over the test data set, and use the per class
+
+### SEED Data
+
+**How/Why we create Seed Data**
+
+- We have seed data for each model so during retraining the user doesn’t have to add samples for each class, so we can use the weights/biases from the retraining logistic regression sklearn model to update the weights/biases of the deep learning model and then run inference on the GPU 
+- The retraining seed data should have same class distribution ratios as the original training data (ie 10% water, 50% trees ect)
+- I’ve been generating retraining data using the GPU enabled Azure notebooks (these should ideally be converted into scripts) 
+- [Seed Data Creation Script](https://github.com/developmentseed/pearl-ml-pipeline/blob/main/src/seed_data_creation.py)
+
+
 
 ## Training Dataset Creation
 
@@ -58,10 +83,10 @@ If you are going to use AML to train LULC models for the first time, please go t
 
 This code was tested using `python 3.6.5`
 
-Please install `train_azure/requirements.txt` into your local environment
+[Create a conda environment](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file) using `.pytorch-env.yaml` file and execute the scripts from the created environment.
 
 
-You will need to set the following variables in your env
+You will need to set the following variables in your `.env`
 
 bash
 ```
